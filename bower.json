@@ -1,0 +1,29 @@
+{
+  "name": "GroundCtrl",
+  "version": "0.0.0",
+  "authors": [
+    "Kim Marquardt <kim.marquardt@gmail.com>"
+  ],
+  "description": "dissociation, distance, dystopian, danger",
+  "main": "index.html",
+  "keywords": [
+    "space",
+    "scifi",
+    "game",
+    "WegGL"
+  ],
+  "license": "MIT",
+  "homepage": "groundctrl.azurewebsites.net",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "/public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "threex.spaceships": "*",
+    "lodash": "~2.4.1"
+  }
+}

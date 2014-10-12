@@ -1,0 +1,24 @@
+.DS_Store
+.AppleDouble
+.LSOverride
+node_modules/
+node_modules/*
+
+public/dist/
+public/lib/
+vendor/
+
+
+# private
+config/
+
+# Icon must ends with two \r.
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
