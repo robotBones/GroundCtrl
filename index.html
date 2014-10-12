@@ -32,7 +32,7 @@ require([ 'vendor/threex.spaceships/package.require.js'
   // handle window resize events
   var winResize  = new THREEx.WindowResize(renderer, camera);
   //////////////////////////////////////////////////////////////////////////////////
-  //    scene ovbjects          //
+  //    space ships          //
   //////////////////////////////////////////////////////////////////////////////////
   var spaceship   = null;
   THREEx.SpaceShips.loadSpaceFighter03(function (object3d){
@@ -41,6 +41,11 @@ require([ 'vendor/threex.spaceships/package.require.js'
     spaceship.rotateY(Math.PI/2);
     spaceship.position.x = -1;
   });
+
+  var shoot   = new THREEx.SpaceShips.Shoot();
+  shoot.position.x = 0.5;
+  shoot.position.z = 0.3;
+  scene.add(shoot);
   //////////////////////////////////////////////////////////////////////////////////
   //    default 3 points lightning          //
   //////////////////////////////////////////////////////////////////////////////////
@@ -53,8 +58,6 @@ require([ 'vendor/threex.spaceships/package.require.js'
   var backLight  = new THREE.DirectionalLight('white', 0.75);
   backLight.position.set(-0.5, -0.5, -2);
   scene.add( backLight );
-  var axisHelper = new THREE.AxisHelper( 5 );
-  scene.add( axisHelper );
 
   //////////////////////////////////////////////////////////////////////////////////
   //    Helpers          //
@@ -68,6 +71,8 @@ require([ 'vendor/threex.spaceships/package.require.js'
   scene.add( lightHelper1 );
   var lightHelper2 = new THREE.DirectionalLightHelper(backLight, 1);
   scene.add( lightHelper2 );
+  var axisHelper = new THREE.AxisHelper( 5 );
+  scene.add( axisHelper );
 
   //////////////////////////////////////////////////////////////////////////////////
   //    add an object and make it move          //
