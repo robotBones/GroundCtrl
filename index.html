@@ -5,11 +5,12 @@
 <script src="vendor/threex.windowresize.js"></script>
 <body style='margin: 0px; background-color: #bbbbbb; overflow: hidden;'>
 <script>
-require([ 'vendor/threex.spaceships/package.require.js'
-        , 'vendor/threex.spaceships/threex.spaceships.js'
-        , 'vendor/threex.spaceships/examples/vendor/three.js/examples/js/loaders/OBJMTLLoader.js'
-        , 'vendor/threex.spaceships/examples/vendor/three.js/examples/js/loaders/OBJLoader.js'
-        , 'vendor/threex.spaceships/examples/vendor/three.js/examples/js/loaders/MTLLoader.js'
+require(['vendor/threex.keyboardstate/package.require.js',
+         'vendor/threex.spaceships/package.require.js',
+         'vendor/threex.spaceships/threex.spaceships.js',
+         'vendor/threex.spaceships/examples/vendor/three.js/examples/js/loaders/OBJMTLLoader.js',
+         'vendor/threex.spaceships/examples/vendor/three.js/examples/js/loaders/OBJLoader.js',
+         'vendor/threex.spaceships/examples/vendor/three.js/examples/js/loaders/MTLLoader.js',
         ], function(){
 
   // detect WebGL
@@ -34,28 +35,63 @@ require([ 'vendor/threex.spaceships/package.require.js'
   //////////////////////////////////////////////////////////////////////////////////
   //    space ships          //
   //////////////////////////////////////////////////////////////////////////////////
+
   var spaceship   = null;
   THREEx.SpaceShips.loadSpaceFighter03(function (object3d){
     scene.add(object3d);
     spaceship = object3d;
     spaceship.rotateY(Math.PI/2);
     spaceship.position.x = -1;
+
+    spaceship.shots = [];
   });
 
-  var shoot   = new THREEx.SpaceShips.Shoot();
-  shoot.position.x = 0.5;
-  shoot.position.z = 0.3;
-  scene.add(shoot);
+
+  // create keyboard instance
+  var keyboard  = new THREEx.KeyboardState();
+
+  // add function in rendering loop
+  onRenderFns.push(function(delta, now){
+
+    // only if the spaceship is loaded
+    if( spaceship === null )  return;
+
+    // set the speed
+    var speed = 1;
+    // only if spaceships is loaded
+    if( keyboard.pressed('down') ){
+        spaceship.position.y  -= speed * delta;
+    }else if( keyboard.pressed('up') ){
+        spaceship.position.y  += speed * delta;
+    }else if( keyboard.pressed('left') ){
+        spaceship.position.x  -= speed * delta;
+    }else if( keyboard.pressed('right') ){
+        spaceship.position.x  += speed * delta;
+    }else if( keyboard.pressed('space') ){
+      if(true){
+        var shoot = new THREEx.SpaceShips.Shoot();
+        spaceship.shots.push(shoot);
+        shoot.position.x = spaceship.position.x;
+        shoot.position.y = spaceship.position.y;
+        shoot.position.z = spaceship.position.z + 0.5;
+        shoot.rotateY(Math.PI/2);
+        scene.add(shoot);
+      }
+    }
+    for(var i = 0; i < spaceship.shots.length; i++){
+      spaceship.shots[i].position.x += speed * delta;
+    }
+  });
   //////////////////////////////////////////////////////////////////////////////////
   //    default 3 points lightning          //
   //////////////////////////////////////////////////////////////////////////////////
 
-  var ambientLight= new THREE.AmbientLight( 0x020202 );
+  var ambientLight= new THREE.AmbientLight( 0x010101 );
   scene.add( ambientLight);
-  var frontLight  = new THREE.DirectionalLight('white', 1);
+  var frontLight  = new THREE.DirectionalLight('orange', 5);
   frontLight.position.set(0.5, 0.5, 2);
   scene.add( frontLight );
-  var backLight  = new THREE.DirectionalLight('white', 0.75);
+  var backLight  = new THREE.DirectionalLight('white', 1);
   backLight.position.set(-0.5, -0.5, -2);
   scene.add( backLight );
 
@@ -67,10 +103,10 @@ require([ 'vendor/threex.spaceships/package.require.js'
   var step = 1;
   var gridHelper = new THREE.GridHelper( size, step );
   scene.add( gridHelper );
-  var lightHelper1 = new THREE.DirectionalLightHelper(frontLight, 1);
-  scene.add( lightHelper1 );
-  var lightHelper2 = new THREE.DirectionalLightHelper(backLight, 1);
-  scene.add( lightHelper2 );
+  // var lightHelper1 = new THREE.DirectionalLightHelper(frontLight, 1);
+  // scene.add( lightHelper1 );
+  // var lightHelper2 = new THREE.DirectionalLightHelper(backLight, 1);
+  // scene.add( lightHelper2 );
   var axisHelper = new THREE.AxisHelper( 5 );
   scene.add( axisHelper );
 
