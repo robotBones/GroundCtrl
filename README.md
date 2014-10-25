@@ -1,7 +1,8 @@
 GroundCtrl
 ==========
 
-spacefaring carebears who just stopped giving a fuck
+This will be practice grounds for Three.js.
 
-Or it will be when life responsibilities get off my back! (facetious transgression)
+"spacefaring carebears who just stopped giving a fuck" will be a normal HTML5 game on another repo...someday......someday
+
 ![progress thus far](https://github.com/robotBones/GroundCtrl/blob/master/public/img/d9dta.gif)
